@@ -1,6 +1,10 @@
-import { Player } from './player.js';
+import { Player } from './Player.js';
+import { GridControls } from './GridControls.js';
+import { GridPhysics } from './GridPhysics.js';
 
 let asteroids;
+let gridControls;
+let gridPhysics;
 
 class GameScene {
     preload() {
@@ -25,9 +29,16 @@ class GameScene {
 
         player.loadPlayer();
 
+        gridPhysics = new GridPhysics(player);
+        gridControls = new GridControls(this.input, gridPhysics);
         asteroids = this.physics.add.staticGroup();
 
         asteroids.create(300, 175, 'roid').setScale(1).refreshBody();
+    }
+
+    update(time, delta) {
+        gridControls.update();
+        gridPhysics.update(delta);
     }
 }
 

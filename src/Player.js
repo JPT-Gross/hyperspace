@@ -16,4 +16,12 @@ export class Player {
             this.tilePos.y * TILE_SIZE + offsetY
         );
     }
+
+    getPosition() {
+        return this.sprite.getBottomCenter();
+    }
+
+    setPosition(position) {
+        this.sprite.setPosition(position.x, position.y);
+    }
 }
