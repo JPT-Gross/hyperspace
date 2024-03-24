@@ -9,6 +9,7 @@ export class GridPhysics {
         this.player = player;
         this.movementDirection = Direction.NONE;
         this.speedPixelsPerSecond = TILE_SIZE * 4;
+        this.tileSizePixelsWalked = 0;
         this.movementDirectionVectors = {
             [Direction.UP]: Vector2.UP,
             [Direction.DOWN]: Vector2.DOWN,
@@ -39,19 +40,33 @@ export class GridPhysics {
 
     updatePlayerPosition(delta) {
         const pixlesToWalkThisUpdate = this.getPixelsToWalkThisUpdate(delta);
+        if (this.willCrossTileBorderThisUpdate(pixlesToWalkThisUpdate)) {
+            this.movePlayerSprite(pixlesToWalkThisUpdate);
+            this.stopMoving();
+        } else {
+            this.movePlayerSprite(pixlesToWalkThisUpdate);
+        }
+    }
+
+    movePlayerSprite(pixelsToMove) {
         const directionVec =
             this.movementDirectionVectors[this.movementDirection].clone();
         const movementDistance = directionVec.multiply(
-            new Vector2(pixlesToWalkThisUpdate)
+            new Vector2(pixelsToMove)
         );
         const newPlayerPos = this.player.getPosition().add(movementDistance);
         this.player.setPosition(newPlayerPos);
-        this.stopMoving();
+        this.tileSizePixelsWalked += pixelsToMove;
+        this.tileSizePixelsWalked %= TILE_SIZE;
     }
 
     getPixelsToWalkThisUpdate(delta) {
         const deltaInSeconds = delta / 1000;
         return this.speedPixelsPerSecond * deltaInSeconds;
+    }
+
+    willCrossTileBorderThisUpdate(pixelsToWalkThisUpdate) {
+        return this.tileSizePixelsWalked + pixelsToWalkThisUpdate >= TILE_SIZE;
     }
 
     stopMoving() {
