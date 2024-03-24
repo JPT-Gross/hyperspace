@@ -7,4 +7,4 @@ const TILE_SIZE = 32;
 
 function update() {}
 
-export { game };
+export { game, TILE_SIZE };
