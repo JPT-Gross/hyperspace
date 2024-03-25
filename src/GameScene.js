@@ -18,12 +18,17 @@ class GameScene {
     }
 
     create() {
+        const grid = this.add
+            .grid(400, 304, 800, 608, 32, 32, 0x000000, 0, 0xffffff, 0.2)
+            .setAltFillStyle(0x000000, 0x000000);
         const playerSprite = this.add.sprite(0, 0, 'playerShip');
-        this.add.image(200, 150, 'pirateShip1');
+        const enemy = this.add.image(200, 150, 'pirateShip1');
         this.add.image(400, 300, 'bg');
         this.add.image(300, 175, 'roid');
 
         playerSprite.setDepth(2);
+        enemy.setDepth(2);
+        grid.setDepth(3);
 
         const player = new Player(playerSprite, new Phaser.Math.Vector2(6, 6));
 
