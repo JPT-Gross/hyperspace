@@ -1,6 +1,7 @@
 import { Player } from './Player.js';
 import { GridControls } from './GridControls.js';
 import { GridPhysics } from './GridPhysics.js';
+import { TILE_SIZE } from './index.js';
 
 let asteroids;
 let gridControls;
@@ -9,8 +10,8 @@ let gridPhysics;
 class GameScene {
     preload() {
         this.load.spritesheet('playerShip', 'assets/spaceships/Ship_1.png', {
-            frameWidth: 32,
-            frameHeight: 32,
+            frameWidth: TILE_SIZE,
+            frameHeight: TILE_SIZE,
         });
         this.load.image('pirateShip1', 'assets/spaceships/Ship_2.png');
         this.load.image('bg', 'assets/map/galaxy.png');
@@ -19,7 +20,18 @@ class GameScene {
 
     create() {
         const grid = this.add
-            .grid(400, 304, 800, 608, 32, 32, 0x000000, 0, 0xffffff, 0.2)
+            .grid(
+                400,
+                304,
+                800,
+                608,
+                TILE_SIZE,
+                TILE_SIZE,
+                0x000000,
+                0,
+                0xffffff,
+                0.2
+            )
             .setAltFillStyle(0x000000, 0x000000);
         const playerSprite = this.add.sprite(0, 0, 'playerShip');
         const enemy = this.add.image(200, 150, 'pirateShip1');

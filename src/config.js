@@ -1,9 +1,10 @@
 import GameScene from './GameScene.js';
+import { TILE_SIZE } from './index.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 608,
+    width: 352,
+    height: 352,
     physics: {
         default: 'arcade',
         arcade: {
